@@ -82,7 +82,7 @@ const [error, setError] = useState<string | null>(null);
     const fetchCars = async () => {
       try {
         const response = await axiosInstance.get("/api/car-offers"); // Adjust the endpoint as necessary
-        setCars(response.data.data.filter((rentalcar) => rentalcar.offer_type == "rent"));
+        setCars(response.data.filter((rentalcar) => rentalcar.offer_type == "rent"));
         setLoading(false);
         console.log(response.data);
       } catch (err) {

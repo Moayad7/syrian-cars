@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ShoppingBag, Clock, Car, HelpCircle } from "lucide-react";
 import SEO from "../components/SEO";
 import axios from "../config/axiosConfig"; // Import the Axios instance
+import Spinner from "@/components/ui/Spinner";
 
 // // Sample car data (in a real app, this would come from an API or state management)
 // const featuredCars = [
@@ -100,7 +101,7 @@ const Index = () => {
     const fetchCars = async () => {
       try {
         const cars = await axios.get("/api/car-offers");
-        setCars(cars.data.data);
+        setCars(cars.data);
         console.log(cars.data);
         setFeaturedCars(cars.data.data);
         setRecentCars(cars.data.data);
@@ -227,8 +228,12 @@ const Index = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {cars
-                .filter((car, i) => car.is_featured)
+              {loading ?
+              <Spinner />
+              :
+              
+              cars
+                .filter((car, i) => car.car.is_featured)
                 .map((car, i) => (
                   <div
                     key={car.id}
